@@ -6,9 +6,9 @@ disable-model-invocation: true
 
 # Interrogate
 
-Follow the [portable runtime contract](../pstack-pi/references/runtime.md) for reviewer panels, concurrent child execution, model choices, and questions.
+Follow the [portable runtime contract](../pstack-omp/references/runtime.md) for reviewer panels, concurrent child execution, model choices, and questions.
 
-Spawn one reviewer per configured model to adversarially review code changes. Each model gets the same prompt and rubric. The adversarial signal comes from model diversity, not assigned personas. Models differ in blind spots, priors, and reasoning patterns. Agreement across models is high-confidence signal; lone-model findings are worth reading but lower confidence.
+Spawn one reviewer per configured model to adversarially review code changes. Each model gets the same prompt and rubric. The adversarial signal comes from model diversity, not assigned personas.
 
 The deliverable is a synthesized verdict. Do NOT auto-apply changes.
 
@@ -24,20 +24,20 @@ Package the diff (or file contents) plus any surrounding context files the revie
 
 ## Step 2, State the Intent
 
-Before spawning reviewers, state the intent explicitly. What is this code trying to accomplish? Derive this from:
+Before spawning reviewers, state the intent explicitly. Derive this from:
 
 - The user's message
 - Commit messages
 - PR description if one exists
 - The code itself
 
-Write one clear paragraph. Reviewers challenge whether the work achieves the intent well, not whether the intent itself is correct. If you're unsure about the intent, ask the user before proceeding.
+Write one clear paragraph. If you're unsure about the intent, ask the user before proceeding.
 
 ## Step 3, Spawn Reviewers
 
-Launch all reviewers concurrently through the host's task facility. Use the `interrogate reviewers` panel from the portable pstack configuration when present, one reviewer per entry, extending or shrinking the Reviewer A/B/C/D labels to the configured entry count. Otherwise use a diverse host-supported panel drawn from `reviewer`, `planner`, `designer`, and `inherit-parent`.
+Launch all reviewers concurrently through the host's task facility. Use the `interrogate reviewers` line from the portable pstack configuration, one reviewer per entry, extending or shrinking the Reviewer A/B/C labels to the configured entry count. If the rule or that line is missing, use a diverse host-supported default panel drawn from `reviewer`, `planner`, `designer`, and `inherit-parent`.
 
-Each reviewer is read-only and receives the configured panel choice plus a standalone brief. If a configured choice is unavailable, use the closest live role or model exposed by the host and record the substitution; do not block the review. `inherit-parent` and `auto` mean to omit an explicit model choice.
+Each reviewer is read-only and receives the configured panel choice plus a standalone brief. If the host task facility rejects a configured entry, run that reviewer on the default panel choice of the same family and say so; families go by model prefix (`claude-*`, `gpt-*`, `grok-*`) or canonical role, and with no family match use Reviewer A's default. If it rejects a default, pick the closest live role or model exposed by the host, preferring the highest-reasoning tier of the same family, record the substitution, and open a separate PR to update the configured value or default panel. Do not block the review on a rejected choice. Never treat an alias entry as a rejected choice or apply either fallback to it; `inherit-parent` and `auto` mean to omit an explicit model choice.
 
 Read `references/reviewer-prompt.md` and fill in the template with:
 1. The stated intent
@@ -46,8 +46,6 @@ Read `references/reviewer-prompt.md` and fill in the template with:
 4. The code-quality lens from `references/code-quality-review.md`
 
 The same filled template goes to all reviewers, so every model applies the code-quality lens.
-
-Each reviewer produces structured findings as described in the prompt template.
 
 ## Step 4, Synthesize
 
@@ -63,7 +61,7 @@ As results come back, build a unified picture:
 
 You are the lead reviewer, a pragmatic senior engineer, not a neutral aggregator.
 
-Read `references/lead-judgment.md` for the full framework. Reviewers only see a slice of the codebase. You have the full context (the goal, the constraints, the timeline, which tradeoffs were already considered). Use that context aggressively.
+Read `references/lead-judgment.md` for the full framework.
 
 Categorize every finding using these buckets:
 
@@ -97,7 +95,7 @@ Present the verdict in this structure:
 [Valid but low-priority. Brief list.]
 
 ### Dismissed
-[Rejected findings with brief rationale. This shows the user what was filtered out and why, so they can override your judgment if they disagree.]
+[Rejected findings with brief rationale.]
 
 ### Agreement Map
 [Where did models agree, where did they diverge, and what does the pattern of agreement/disagreement tell us?]

@@ -1,24 +1,20 @@
-# oh-my-pstack
+# pstack-omp
 
-Portable, rigorous engineering workflows for [OMP](https://omp.sh/), Pi,
-[OpenCode](https://opencode.ai/), Claude Code, Codex, and other hosts that support
-the Agent Skills layout.
+Rigorous engineering workflows for [OMP](https://omp.sh/).
 
-`oh-my-pstack` is a universal port of the original
+`pstack-omp` is an OMP port of the original
 [Cursor pstack](https://github.com/cursor/plugins/tree/main/pstack). It keeps the
 upstream workflow catalog, playbooks, principles, references, and verification
-scripts while replacing Cursor-only runtime assumptions with a host-neutral
-adapter.
+scripts while replacing Cursor-only runtime assumptions with an OMP adapter.
 
 ## What is included
 
-- 44 upstream pstack skills and their supporting references.
+- The upstream pstack skills and their supporting references.
 - Benny's three fail-closed issue-triage/reproduction skills.
 - `poteto-mode` for routing work through the right playbook.
-- `pstack-pi` for translating roles, delegation, models, transcripts, questions,
-  and long-running work to the active host.
-- Native package metadata for OMP/Pi, Claude Code, and Codex, plus OpenCode setup
-  guidance.
+- `pstack-omp` for translating roles, delegation, models, transcripts, questions,
+  and long-running work to OMP.
+- Native OMP package metadata.
 - Daily upstream synchronization that opens a verified pull request.
 
 The original Cursor repository is the content authority. The dsebban repository
@@ -26,121 +22,48 @@ was used only as an early structural example; it is not an upstream source.
 
 ## Install
 
-### Pi
-
 Install the public GitHub package:
 
 ```bash
-pi install https://github.com/shrimpwtf/oh-my-pstack
-```
-
-Start Pi in your project:
-
-```bash
-pi
-```
-
-Use `pi list` to confirm the package. Use `pi update --extensions` to reconcile
-installed Git packages, or `pi remove https://github.com/shrimpwtf/oh-my-pstack`
-to remove it. Pi packages run with full system access; review the source before
-installing and keep the package pinned or update it deliberately.
-
-For parallel workers and per-role model assignments, install Pi's delegation
-extension too:
-
-```bash
-pi install npm:pi-subagents
-```
-
-Restart Pi and run `/subagents-doctor`. The extension provides the `subagent` tool
-and built-in `scout`, `researcher`, `worker`, `reviewer`, `oracle`, and `delegate`
-agents. It is separate from pstack because native Pi does not include subagents.
-
-### OMP
-
-Install from GitHub:
-
-```bash
-omp install https://github.com/shrimpwtf/oh-my-pstack
+omp install https://github.com/weiihann/pstack-omp
 ```
 
 For local development, load the checkout directly:
 
 ```bash
-omp --plugin-dir /path/to/oh-my-pstack
+omp --plugin-dir /path/to/pstack-omp
 ```
 
-### OpenCode
-
-OpenCode natively loads Agent Skills from `.opencode/skills/` in a project or
-`~/.config/opencode/skills/` globally. Install the repository and copy its skills
-into one of those discovery directories:
-
-```bash
-git clone https://github.com/shrimpwtf/oh-my-pstack.git \
-  ~/.local/share/oh-my-pstack
-mkdir -p ~/.config/opencode/skills
-cp -R ~/.local/share/oh-my-pstack/skills/. ~/.config/opencode/skills/
-```
-
-Start OpenCode in your project. The skills appear through OpenCode's native
-`skill` tool; ask it to load `setup-pstack` or `poteto-mode` by name. To update,
-pull the repository and repeat the copy step:
-
-```bash
-git -C ~/.local/share/oh-my-pstack pull --ff-only
-cp -R ~/.local/share/oh-my-pstack/skills/. ~/.config/opencode/skills/
-```
-
-For project-local installation, use `.opencode/skills/` instead:
-
-```bash
-git clone https://github.com/shrimpwtf/oh-my-pstack.git .pstack-source
-mkdir -p .opencode/skills
-cp -R .pstack-source/skills/. .opencode/skills/
-```
-
-OpenCode already provides primary and subagents. Configure their models through
-your normal `opencode.json` or `opencode.jsonc` settings, then ask `setup-pstack`
-to map pstack roles to the agents your OpenCode installation exposes.
-
-### Claude Code and Codex
-
-Clone or download the repository, then add it through the host's local plugin
-workflow. Claude Code reads `.claude-plugin/plugin.json`; Codex reads
-`.codex-plugin/plugin.json`. If plugin installation is unavailable, point the
-host's Agent Skills configuration at the repository's `skills/` directory.
+Use `omp plugin list` to confirm the package. Remove it with
+`omp plugin uninstall pstack-omp`. The package runs with full system access;
+review the source before installing and keep it pinned or update it
+deliberately.
 
 ## Quick start
 
-Start substantial work with `poteto-mode`. Use `pstack-pi` when a workflow needs
-delegation or host-specific lifecycle behavior.
+Start substantial work with `poteto-mode`. Use `pstack-omp` when a workflow
+needs delegation or OMP-specific lifecycle behavior.
 
-All hosts share the same skill content. The runtime adapter maps canonical pstack
-roles to the capabilities actually exposed by the host. Missing integrations are
-reported honestly and fail closed; for example, Benny requires an available
-Slack/tracker/control adapter rather than pretending those tools exist.
+The runtime adapter maps canonical pstack roles to OMP's bundled task agents
+(`scout`, `designer`, `reviewer`, `security-reviewer`, `librarian`, `task`,
+`sonic`). Missing integrations are reported honestly and fail closed; for
+example, Benny requires an available Slack/tracker/control adapter rather than
+pretending those tools exist.
 
 ## First-time setup
 
-After installing, start a fresh agent session in the project you want to work on.
+After installing, start a fresh OMP session in the project you want to work on.
 Run the setup skill once:
 
 ```text
 $setup-pstack
 ```
 
-It detects the roles and models your host actually exposes, lets you choose the
-defaults for implementation and review work when the host supports per-child
-model selection. On a task-capable host, it writes concrete
+It detects the models and task agents your OMP session actually exposes, lets
+you choose the defaults for implementation and review work, and writes concrete
 `provider/model-id` assignments to `.pstack/config.md` (or to `$PSTACK_CONFIG`
-when set). Native Pi can list and switch the single active model, but it does not
-include subagents. Install `pi-subagents`, restart Pi, and run
-`/subagents-doctor` before setup if you want role assignments. Setup then writes
-the pstack role map and Pi's `subagents.agentOverrides` with concrete model IDs.
-Without the extension, setup reports the limitation instead of pretending that
-role assignments are active. Switch Pi's single active model with `/model` or
-`pi --model provider/model-id`.
+when set). Model routing itself lives in OMP settings (`modelRoles`,
+`task.agentModelOverrides`); the configuration file is the portable record.
 
 Then route your first real task through the main workflow:
 
@@ -162,7 +85,7 @@ in `upstream.lock.json`.
 The updater:
 
 1. Fetches the latest upstream revision.
-2. Normalizes known Cursor runtime bindings for portable hosts.
+2. Normalizes known Cursor runtime bindings for OMP.
 3. Updates only upstream-owned files.
 4. Preserves OMP adapters and protected portability adaptations.
 5. Stops before writing if an adapted file changed upstream.
@@ -195,9 +118,9 @@ the upstream lock, and forbidden vendor-specific runtime bindings.
 
 ## Host contract
 
-Read `skills/pstack-pi/references/runtime.md` before adapting a workflow to a new
-agent host. It defines canonical roles, capability mapping, configuration paths,
-transcript handling, interaction fallbacks, and verification ownership.
+Read `skills/pstack-omp/references/runtime.md` before adapting a workflow. It
+defines canonical roles, capability mapping, configuration paths, transcript
+handling, interaction fallbacks, and verification ownership for OMP.
 
 ## License and attribution
 

@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Triage issue reports
 
-Follow the [portable runtime contract](../pstack-pi/references/runtime.md) for tool inventory, child roles and isolation, skill invocation, questions, and watcher fallbacks.
+Follow the [portable runtime contract](../pstack-omp/references/runtime.md) for tool inventory, child roles and isolation, skill invocation, questions, and watcher fallbacks.
 
 Classify one Slack report and post one useful verdict in its source thread. Create a tracker issue only for a clear, new bug. Do not reproduce or fix it here.
 

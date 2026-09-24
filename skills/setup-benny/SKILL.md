@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Set up Benny
 
-Follow the [portable runtime contract](../pstack-pi/references/runtime.md) for skill paths, host capability discovery, questions, roles, models, and durable automation facilities.
+Follow the [portable runtime contract](../pstack-omp/references/runtime.md) for skill paths, host capability discovery, questions, roles, models, and durable automation facilities.
 
 Benny is a dormant pair of automation workflows backed by the sibling **triage-issue-reports** and **reproduce-and-fix-issues** skills. Benny needs external configuration and two live host automations or durable loops. Do not assume a particular editor, cloud checkout, plugin cache, protocol link, or automation backend.
 
@@ -21,7 +21,7 @@ Ask which repository will run the automations. Use the current package's `skills
 - `skills/setup-benny/SKILL.md`
 - `skills/triage-issue-reports/SKILL.md` and its references
 - `skills/reproduce-and-fix-issues/SKILL.md` and its references
-- `skills/pstack-pi/references/runtime.md`
+- `skills/pstack-omp/references/runtime.md`
 - the shared pstack skills named by the two operational skills
 
 When copying is required:

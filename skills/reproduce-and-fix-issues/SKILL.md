@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Reproduce and fix issues
 
-Follow the [portable runtime contract](../pstack-pi/references/runtime.md) for watcher, explorer, reviewer, and implementer roles; child isolation; tool inventory; skill invocation; and long-running checkpoints.
+Follow the [portable runtime contract](../pstack-omp/references/runtime.md) for watcher, explorer, reviewer, and implementer roles; child isolation; tool inventory; skill invocation; and long-running checkpoints.
 
 Wait for a trusted triage marker in the source thread. Reproduce the exact symptom through the target app's real UI. Verify an existing fix when one exists. Attempt a bounded fix only after a confirmed repro.
 

@@ -1,21 +1,20 @@
 ---
-name: pstack-pi
-description: "Pi runtime adapter for poteto-mode. Maps canonical pstack roles and lifecycle protocols to Pi-compatible task agents, batching, isolation, follow-ups, and durable result resources."
+name: pstack-omp
+description: "OMP runtime adapter for poteto-mode. Maps canonical pstack roles and lifecycle protocols to OMP task agents, batching, isolation, follow-ups, and durable result resources."
 ---
 
-# pstack on Pi
+# pstack on OMP
 
-`poteto-mode` is the sole router. It selects the playbook, canonical role, step order, and lifecycle protocol. This adapter translates those choices to Pi-compatible runtimes. It never selects a playbook, repeats the playbook index, or changes a playbook gate.
+`poteto-mode` is the sole router. It selects the playbook, canonical role, step order, and lifecycle protocol. This adapter translates those choices to OMP. It never selects a playbook, repeats the playbook index, or changes a playbook gate.
 
 While this skill is active, its role map is the specific pstack execution contract. Generic host instructions remain valid outside pstack work.
 
 ## Canonical role map
 
-Use the live host's configured names. This reference mapping targets OMP, a
-Pi-based runtime; other hosts must substitute their own names through the runtime
-contract.
+Use the live host's configured names. This mapping targets OMP's bundled task
+agents.
 
-| Canonical role | Pi/OMP agent | Contract |
+| Canonical role | OMP agent | Contract |
 |---|---|---|
 | `explorer` | `scout` | Read-only repository reconnaissance, trace reduction, narrow audits. |
 | `watcher` | `scout` | Observe one exact generation or external-state transition, then terminate. |
@@ -46,7 +45,7 @@ A canonically routed task item's `agent` value must be one of those bundled name
 
 ### Planning distinction
 
-The imported warning about a built-in planning subagent describes a source-host mechanism that bypassed the skill contract. This Pi-compatible package has no bundled `plan` agent. Canonical `planner` work uses `designer` with a technical-planning brief and does not pass source-host subagent fields.
+The imported warning about a built-in planning subagent describes a source-host mechanism that bypassed the skill contract. OMP has no bundled `plan` agent. Canonical `planner` work uses `designer` with a technical-planning brief and does not pass source-host subagent fields.
 
 ### Security review
 

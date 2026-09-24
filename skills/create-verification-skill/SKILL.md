@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Create a verification skill
 
-Follow the [portable runtime contract](../pstack-pi/references/runtime.md) for project-local skill paths, invocation, and user interaction.
+Follow the [portable runtime contract](../pstack-omp/references/runtime.md) for project-local skill paths, invocation, and user interaction.
 
 Every serious project needs a scripted way to drive the real app and prove behavior: launch it, exercise a feature the way a user would, and capture evidence. This skill generates that as a project-local skill (`skills/verify-<app>/` within this package, or the current host's project-local skill root) tailored to the repo. You write the generator's output for the next agent, not for a human: it will be read cold, mid-task, by an agent that has never seen the app.
 
