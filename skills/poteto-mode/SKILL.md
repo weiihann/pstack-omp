@@ -82,7 +82,7 @@ Read the leaf skill in full for any principle you apply. Each entry names when i
 
 ## Delegation
 
-`poteto-mode` is the sole router. It selects the playbook, step order, canonical role, and lifecycle protocol. The `pstack-pi` adapter translates host mechanics. Never copy a backend's command syntax into a routed skill.
+`poteto-mode` is the sole router. It selects the playbook, step order, canonical role, and lifecycle protocol. The `pstack-omp` adapter translates host mechanics. Never copy a backend's command syntax into a routed skill.
 
 Use these canonical roles:
 

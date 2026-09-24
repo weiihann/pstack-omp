@@ -24,7 +24,7 @@ test("normalization removes the supported Cursor runtime bindings", () => {
 
 test("protected paths remain outside automatic upstream ownership", () => {
   assert.equal(isProtectedPath("skills/poteto-mode/SKILL.md"), true);
-  assert.equal(isProtectedPath("skills/pstack-pi/SKILL.md"), true);
+  assert.equal(isProtectedPath("skills/pstack-omp/SKILL.md"), true);
   assert.equal(isProtectedPath("skills/how/SKILL.md"), true);
   assert.equal(isProtectedPath("skills/arena/SKILL.md"), true);
   assert.equal(isProtectedPath("skills/why/references/sources/slack.md"), false);

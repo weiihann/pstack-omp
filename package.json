@@ -1,12 +1,11 @@
 {
-  "name": "pstack-pi",
-  "version": "0.14.3-pi.1",
-  "description": "Portable pstack engineering workflows and Agent Skills for Pi, OMP, OpenCode, Claude Code, and Codex.",
+  "name": "pstack-omp",
+  "version": "0.15.0",
+  "description": "pstack engineering workflows and Agent Skills for the OMP coding agent.",
   "type": "module",
   "keywords": [
-    "pi-package",
-    "agent-skills",
     "pstack",
+    "agent-skills",
     "coding-agent",
     "developer-workflow",
     "engineering-workflow",
@@ -16,16 +15,12 @@
     "tdd",
     "verification",
     "orchestration",
-    "claude-code",
-    "codex",
-    "opencode",
     "omp",
-    "pi",
     "workflow",
     "subagents"
   ],
   "license": "MIT",
-  "pi": {
+  "omp": {
     "skills": [
       "./skills"
     ]
@@ -37,8 +32,6 @@
     "README.md",
     "LICENSE",
     "THIRD_PARTY_NOTICES.md",
-    ".claude-plugin",
-    ".codex-plugin",
     "upstream.lock.json"
   ],
   "scripts": {
