@@ -52,6 +52,7 @@ const requiredSkills = new Set([
   "principle-sequence-verifiable-units",
   "principle-subtract-before-you-add",
   "principle-type-system-discipline",
+  "rust-best-practices",
 ]);
 
 const failures = [];
