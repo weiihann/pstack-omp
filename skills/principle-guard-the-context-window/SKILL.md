@@ -12,5 +12,6 @@ The context window is finite and non-renewable within a session. Every token sho
 **Why:** Context overflow degrades reasoning quality, creates compression artifacts, and halts progress.
 
 **Pattern:**
-- **Isolate large payloads.** Route verbose outputs, screenshots, and large documents to child agents when the host supports them; otherwise process them in bounded local slices. The main context gets summaries, not raw data.- **Keep frequently used content inline.** Templates and references used on every invocation belong in the skill file, not in separate files that cost a read each time.
+- **Isolate large payloads.** Route verbose outputs, screenshots, and large documents to child agents when the host supports them; otherwise process them in bounded local slices. The main context gets summaries, not raw data.
+- **Keep frequently used content inline.** Templates and references used on every invocation belong in the skill file, not in separate files that cost a read each time.
 - **Size phases and cap scope.** Limit files per phase, set turn budgets, account for mechanism costs.
