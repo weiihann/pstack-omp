@@ -9,9 +9,10 @@ disable-model-invocation: true
 Follow the [portable runtime contract](../pstack-omp/references/runtime.md) for tool discovery, researcher and synthesizer roles, model choices, concurrency, and unavailable-capability reporting.
 
 Investigate the motivation and intent behind code.
+
 Companion to the `how` skill. `how` answers what the code does and how it works. `why` answers what forces led to its shape.
 
-Each spawn below names a role line in the `pstack-models.mdc` rule and a default. Set `model` to that line's value, or to the default if the rule or the line is missing. Leave `model` unset when the value is `auto` or `inherit-parent`. If the host task runner rejects a slug, use the default and say so. If it rejects the default, use the closest valid slug of the same family from its error message.
+Each launch below names a line in the portable pstack configuration (`$PSTACK_CONFIG`, else `.pstack/config.md`) and a default role. Use that line's value, or the default role if the configuration or the line is missing. An `auto` or `inherit-parent` value runs the child on the parent chat model, with no explicit model choice. If the host task runner rejects a configured choice, use the default role and say so. If it rejects the default, use the closest live role the host exposes.
 
 ## Operating Posture
 
@@ -81,6 +82,7 @@ Aim for a complete **coverage map**, not a minimal one. Document the null, don't
 Launch all matching investigators in a single message so they run concurrently. Don't ask one agent to cover multiple MCPs.
 
 For each category, use the configured `why investigators` choice when present; otherwise use the canonical `researcher` role. Give investigators access to the matching host tool while forbidding writes in every standalone brief. If the host cannot combine a read-only repository posture with external-tool access, preserve tool access and enforce no writes in the brief rather than assuming a vendor-specific mode.
+
 Each investigator gets:
 1. The base prompt from `references/investigator-prompt.md`
 2. The category playbook `references/sources/<source>.md` for the selected MCP, adapted from the examples in `references/source-playbook.md`
@@ -120,6 +122,7 @@ If your scope assessment suggests a single-commit trivial target where the PR de
 ## Step 4. Synthesize
 
 Launch one `synthesizer` child, using the configured `why synthesizer` choice when present. Give it the host tools needed to spot-verify citations while forbidding repository writes in its standalone brief.
+
 The synthesizer gets:
 1. The investigator findings, including any null results and any categories skipped with justification
 2. The code anchor from Step 2 (file paths, symbols, commit hashes, PR numbers, ticket IDs)

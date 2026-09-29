@@ -10,7 +10,7 @@ Follow the [portable runtime contract](../pstack-omp/references/runtime.md) for 
 
 Explore the codebase to answer "how does X work?" questions. Produce architectural explanations at the level of a senior engineer onboarding onto a subsystem, enough to build a working mental model, not so much that it reads like annotated source code.
 
-Each spawn below names a role line in the `pstack-models.mdc` rule and a default. Set `model` to that line's value, or to the default if the rule or the line is missing. Leave `model` unset when the value is `auto` or `inherit-parent`. If the host task runner rejects a slug, use the default and say so. If it rejects the default, use the closest valid slug of the same family from its error message.
+Each launch below names a line in the portable pstack configuration (`$PSTACK_CONFIG`, else `.pstack/config.md`) and a default role. Use that line's value, or the default role if the configuration or the line is missing. An `auto` or `inherit-parent` value runs the child on the parent chat model, with no explicit model choice. If the host task runner rejects a configured choice, use the default role and say so. If it rejects the default, use the closest live role the host exposes.
 
 ## Step 1. Assess Complexity
 

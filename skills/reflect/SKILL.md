@@ -32,19 +32,19 @@ For each candidate, read the first JSONL line and check that `message.content[0]
 
 Launch three reviewer children concurrently through the host's task facility. Grant each child read access to the transcript and any host tools needed for context lookups (tickets, chat threads, observability traces referenced in the transcript), but forbid file writes in the brief; the parent applies edits. If the host cannot combine read-only repository posture with external-tool access, preserve tool access and enforce no writes in the brief.
 
-Each reviewer and the synthesizer name a role line in the model configuration (`$PSTACK_CONFIG` or `.pstack/config.md`) and a default. Set `model` to that line's value, or to the default if the configuration or the line is missing. Leave `model` unset when the value is `auto` or `inherit-parent`. If the host task runner rejects a slug, use the default and say so. If it rejects the default, use the closest valid slug of the same family from its error message.
+Each reviewer and the synthesizer name a role line in the model configuration (`$PSTACK_CONFIG` or `.pstack/config.md`) and a default role. Set `model` to that line's value, or use the default role if the configuration or the line is missing. Leave `model` unset when the value is `auto` or `inherit-parent`. If the host task runner rejects a model, use the default role and say so. If it rejects the default, use the closest valid choice of the same family from its error message.
 
-| Lens | Configured choice / role line | Default model | Prompt template |
+| Lens | Role line | Default role | Prompt template |
 |---|---|---|---|
-| Judgment | `reflect judgment, divergent, synthesizer`, else `reviewer` | `host-configured role/model` | `references/judgment-reviewer.md` |
-| Tooling | `reflect tooling`, else `researcher` | `host-configured role/model` | `references/tooling-reviewer.md` |
-| Divergent | `reflect judgment, divergent, synthesizer`, else `designer` | `host-configured role/model` | `references/divergent-reviewer.md` |
+| Judgment | `reflect judgment` | `reviewer` | `references/judgment-reviewer.md` |
+| Tooling | `reflect tooling` | `researcher` | `references/tooling-reviewer.md` |
+| Divergent | `reflect divergent` | `designer` | `references/divergent-reviewer.md` |
 
 Pass each template verbatim, substituting the transcript path or digest where marked. Reviewers return findings in their child reports.
 
 ### 3. Synthesize
 
-Launch one `synthesizer` child, using the configured `reflect synthesizer` choice when present, else the `reflect judgment, divergent, synthesizer` line's default (`host-configured role/model`). Give it the host tools needed to spot-verify citations while forbidding repository writes in its standalone brief. Use `references/synthesizer.md` verbatim, with each reviewer's full output inlined where marked. The synthesizer returns a structured Accepted / Rejected / Backlog list.
+Launch one child with the model from the `reflect synthesizer` line (default role `synthesizer`). Give it the host tools needed to spot-verify citations while forbidding repository writes in its standalone brief. Use `references/synthesizer.md` verbatim, with each reviewer's full output inlined where marked. The synthesizer returns a structured Accepted / Rejected / Backlog list.
 
 ### 4. Structural enforcement check
 

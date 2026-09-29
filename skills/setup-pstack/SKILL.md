@@ -111,8 +111,8 @@ when the host supports it:
 # Values are concrete provider/model-id choices confirmed by the host.
 # budget: unlimited (max)
 feature, refactoring: <implementer-model>
-bug-fix: <reviewer-model>
-perf-issue: <reviewer-model>
+bug-fix: <implementer-model>
+perf-issue: <implementer-model>
 hillclimb: <implementer-model>
 judgment and prose: <reviewer-model>
 hardest tasks: inherit-parent
