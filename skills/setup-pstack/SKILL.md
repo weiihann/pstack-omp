@@ -49,24 +49,26 @@ models.
 are available, ask for a budget before mapping roles. Use the host's structured
 interaction tool when available; otherwise ask one focused question in normal
 conversation. Offer these four options with these exact labels, and name the
-current budget when the configuration records one.
+current budget when the configuration records one. With no configuration, say
+that `large` is the default budget.
 
-- `unlimited — keep max`
+- `unlimited — max reasoning`
 - `large — xhigh reasoning`
 - `medium — high reasoning`
 - `small — medium reasoning`
 
 **(b) Apply it.** Build the working table from the default role mapping in step 5,
 and on a re-run keep any role you changed by family, list, or alias
-(`inherit-parent`). `unlimited` leaves every effort as in that table. `large`,
-`medium`, and `small` set the effort token of every real model ID, panel entries
-included, to `xhigh`, `high`, or `medium`. The effort token is the last token, or
-the one before a trailing `fast`, on the ladder `max` > `xhigh` > `high` >
-`medium` > `low`. If the result is not a detected model, use the same family's
-detected model with the highest effort at or below the target, else mark the role
-as needing a choice. `inherit-parent` does not change. So `small` turns
-`claude-opus-5-5-max` into `claude-opus-5-5-medium`, and `grok-4.7-xhigh-fast`
-into `grok-4.7-medium-fast`.
+(`inherit-parent`). `unlimited`, `large`, `medium`, and `small` set the effort
+token of every real model ID, panel entries included, to `max`, `xhigh`, `high`,
+or `medium`. The effort token is the last token, or the one before a trailing
+`fast`, on the ladder `max` > `xhigh` > `high` > `medium` > `low`. If the result
+is not a detected model, use the same family's detected model with the highest
+effort at or below the target, else mark the role as needing a choice.
+`inherit-parent` and `auto` do not change. So `unlimited` turns
+`claude-opus-5-5-xhigh` into `claude-opus-5-5-max`. Grok models top out at
+`xhigh`, so under `unlimited` the fallback keeps `grok-4.7-xhigh-fast` as it is.
+`small` turns them into `claude-opus-5-5-medium` and `grok-4.7-medium-fast`.
 
 **(c) Show the roles and confirm.** Show every workflow role with its current
 concrete `provider/model-id` choice. Mark an explicit model absent from the live
@@ -109,7 +111,7 @@ when the host supports it:
 ```md
 # pstack role and model configuration
 # Values are concrete provider/model-id choices confirmed by the host.
-# budget: unlimited (max)
+# budget: large (xhigh)
 feature, refactoring: <implementer-model>
 bug-fix: <implementer-model>
 perf-issue: <implementer-model>
