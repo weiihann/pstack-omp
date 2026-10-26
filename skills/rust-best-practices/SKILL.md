@@ -2,7 +2,6 @@
 name: rust-best-practices
 description: Rust best practices. Use when reading or editing any .rs file.
 paths: ["**/*.rs"]
-disable-model-invocation: true
 ---
 
 # Rust best practices
