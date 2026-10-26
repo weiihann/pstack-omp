@@ -2,7 +2,7 @@
   "repository": "https://github.com/cursor/plugins.git",
   "ref": "main",
   "path": "pstack",
-  "commit": "e5136d82418d2db3165ea1050d17577cd618cc05",
+  "commit": "99b609a72323b70204eab407c622f436e858e112",
   "protectedPrefixes": [
     "skills/poteto-mode/",
     "skills/pstack-omp/",
@@ -19,6 +19,7 @@
     "skills/how/references/explorer-prompt.md",
     "skills/interrogate/SKILL.md",
     "skills/interrogate/references/rubric.md",
+    "skills/ketchup/SKILL.md",
     "skills/maintain-verification-skill/SKILL.md",
     "skills/no-comments/SKILL.md",
     "skills/poteto-help/SKILL.md",

@@ -152,3 +152,7 @@ how to switch it.
 ### 7. Offer a verification skill (optional)
 
 Check whether the project has a way to drive the real app for proof, such as a `verify-*` skill or an existing harness. If not, offer once to invoke the sibling **create-verification-skill** skill. On no, move on without pushing.
+
+### 8. Offer a formal verification skill (optional)
+
+Check whether the project already has a formal verification skill, such as a project skill that runs a model checker, a proof, or another verifier against the code. If not, offer once to invoke the sibling **create-formal-verification-skill** skill. On no, move on without pushing.
