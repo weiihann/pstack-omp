@@ -109,7 +109,7 @@ silently overwrites them.
 npm run verify
 npm run test:sync
 bun install --cwd skills/poteto-mode/scripts --frozen-lockfile
-bun test orch watch-pr
+bun test watch-pr check-plan.test.ts
 bunx tsc --project skills/poteto-mode/scripts/watch-pr/tsconfig.json --noEmit --strict
 ```
 

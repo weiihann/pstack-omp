@@ -84,12 +84,13 @@ that no pstack role can receive a different model in this session and do not
 present the portable defaults as an assignment or overwrite an existing role
 configuration with inactive aliases.
 
-For panel roles (`arena runners`, `arena cross-judge pool`, `architect runners`,
-and `interrogate reviewers`), one child runs per entry, so list length controls
+For panel roles (`arena runners`, `architect runners`, and `interrogate
+reviewers`), one child runs per entry, so list length controls
 fan-out. Prefer diversity for judgment-sensitive panels. `arena cross-judge pool`
-is also a list, but Arena selects one value from it whose model family differs
-from the parent's when possible. `swarm workers` is the default choice for every
-worker unless a race or comparison assigns a different choice per arm.
+is also a list, but Arena runs one judge. It tries only values from a family other
+than the parent's, in list order, so order it by preference. An `inherit-parent`
+value never judges. `swarm workers` is the default choice for every worker unless
+a race or comparison assigns a different choice per arm.
 
 ### 4. Validate
 
