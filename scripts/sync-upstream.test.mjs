@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
-import { mkdtemp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import { chmod, mkdtemp, mkdir, readFile, rm, stat, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 import test from "node:test";
@@ -62,6 +62,11 @@ test("apply updates an upstream-owned file and advances the lock", async () => {
       join(source, "pstack/skills/blast-radius/SKILL.md"),
       "---\nname: blast-radius\ndescription: updated\n---\nagent: Task subagent\n",
     );
+    await mkdir(join(source, "pstack/skills/blast-radius/scripts"), { recursive: true });
+    await writeFile(join(source, "pstack/skills/blast-radius/scripts/run"), "#!/bin/sh\n");
+    await chmod(join(source, "pstack/skills/blast-radius/scripts/run"), 0o755);
+    await mkdir(join(target, "skills/blast-radius/scripts"), { recursive: true });
+    await writeFile(join(target, "skills/blast-radius/scripts/run"), "#!/bin/sh\n", { mode: 0o644 });
     execFileSync("git", ["add", "."], { cwd: source });
     execFileSync("git", ["commit", "-q", "-m", "update"], { cwd: source });
     await writeFile(
@@ -91,6 +96,8 @@ test("apply updates an upstream-owned file and advances the lock", async () => {
       "utf8",
     );
     assert.match(synced, /host task runner/u);
+    const runMode = (await stat(join(target, "skills/blast-radius/scripts/run"))).mode;
+    assert.equal(runMode & 0o111, 0o111);
     const lock = JSON.parse(await readFile(join(target, "upstream.lock.json"), "utf8"));
     assert.notEqual(lock.commit, "0".repeat(40));
   } finally {

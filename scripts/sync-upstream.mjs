@@ -3,6 +3,7 @@ import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import {
+  chmod,
   mkdtemp,
   mkdir,
   readFile,
@@ -159,17 +160,21 @@ async function applyUpdate(lock, sourceRoot, commit, dryRun) {
       const destinationKey = relative(root, destination);
       if (isProtectedPath(destinationKey)) continue;
       const next = normalizeContent(await readFile(sourceFile, "utf8"));
+      const mode = (await stat(sourceFile)).mode & 0o777;
       let current = null;
+      let currentMode = null;
       try {
         current = await readFile(destination, "utf8");
+        currentMode = (await stat(destination)).mode & 0o777;
       } catch {
         // New upstream file.
       }
-      if (current === next) continue;
+      if (current === next && (currentMode & 0o111) === (mode & 0o111)) continue;
       changed.push(destinationKey);
       if (!dryRun) {
         await mkdir(dirname(destination), { recursive: true });
         await writeFile(destination, next);
+        await chmod(destination, mode);
       }
     }
   }
