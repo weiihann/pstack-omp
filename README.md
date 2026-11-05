@@ -45,8 +45,9 @@ Start substantial work with `poteto-mode`. Use `pstack-omp` when a workflow
 needs delegation or OMP-specific lifecycle behavior.
 
 The runtime adapter maps canonical pstack roles to OMP task agents: the bundled
-`scout`, `reviewer`, `security-reviewer`, `task`, and `sonic`, plus `designer`
-and `librarian` shipped in this package's `agents/`. Missing integrations are reported honestly and fail closed; for
+`scout`, `reviewer`, `security-reviewer`, and `sonic`, plus `poteto-agent`
+(implementers and owners), `designer`, and `librarian` shipped in this package's
+`agents/`. Missing integrations are reported honestly and fail closed; for
 example, Benny requires an available Slack/tracker/control adapter rather than
 pretending those tools exist.
 

@@ -12,8 +12,8 @@ While this skill is active, its role map is the specific pstack execution contra
 ## Canonical role map
 
 Use the live host's configured names. OMP bundles `scout`, `reviewer`,
-`security-reviewer`, `task`, and `sonic`. This package ships `designer` and
-`librarian` in its `agents/` directory.
+`security-reviewer`, `task`, and `sonic`. This package ships `poteto-agent`,
+`designer`, `librarian`, and `comment-sicko` in its `agents/` directory.
 
 | Canonical role | OMP agent | Contract |
 |---|---|---|
@@ -24,8 +24,8 @@ Use the live host's configured names. OMP bundles `scout`, `reviewer`,
 | `reviewer` | `reviewer` | Independent code, protocol, behavioral, or security review. |
 | `researcher` | `librarian` | Source-verified external library, framework, API, protocol, or version research. |
 | `synthesizer` | `reviewer` | Cross-report synthesis, adjudication, and advisory judgment over frozen evidence. |
-| `implementer` | `task` | Bounded implementation or test changes with explicit write ownership. |
-| `owner` | `task` | One coupled multi-step implementation session retained through IRC follow-ups. |
+| `implementer` | `poteto-agent` | Bounded implementation or test changes with explicit write ownership. |
+| `owner` | `poteto-agent` | One coupled multi-step implementation session retained through IRC follow-ups. |
 | `mechanical` | `sonic` | Fully specified low-judgment edits. Ambiguity returns to the root. |
 
 The reference OMP roster is closed:
@@ -36,13 +36,13 @@ designer
 reviewer
 security-reviewer
 librarian
-task
+poteto-agent
 sonic
 ```
 
 A canonically routed task item's `agent` value must be one of those names. Canonical role labels and model aliases are not agent names.
 
-`poteto-agent` and `comment-sicko` are custom compatibility agents for direct named seams in imported skills. A direct compatibility call may use that custom agent name; ordinary canonical routing never does.
+`poteto-agent` is the code-writing delegate. It reads `poteto-mode` in full, including the Principles index, before any work; a generic `task` worker skips that read and drifts from the playbook's principles. Put the absolute path of `poteto-mode/SKILL.md` (or `skill://poteto-mode`) in every `poteto-agent` brief, and never spawn one to run a playbook itself. Use the generic `task` agent only when the host rejects `poteto-agent`, and say so. `comment-sicko` is reserved for the **no-comments** skill.
 
 ### Planning distinction
 
@@ -65,7 +65,7 @@ When the flat schema is active:
 ```json
 {
   "name": "parser-overflow-worker",
-  "agent": "task",
+  "agent": "poteto-agent",
   "task": "GOAL\n...\n\nROLE\n...\n\nSCOPE\n...\n\nCONTEXT\n...\n\nACCEPTANCE\n...\n\nVERIFY\n...\n\nTIMEBOX\n...\n\nFORBIDDEN\n...\n\nREPORT\n...\n\nSTANDING\n...",
   "isolated": true
 }
@@ -184,7 +184,7 @@ Do not mix implementers, reviewers, or synthesizers in one session. Do not let r
 
 ### Long-lived owner
 
-1. Start one non-isolated `task` session with the complete owner brief.
+1. Start one non-isolated `poteto-agent` session with the complete owner brief.
 2. Record its agent ID and reuse it. Do not start a sibling owner for the same unit.
 3. The owner works only in its assigned branch and paths and never starts children.
 4. Send a `write agent://<id>` follow-up only for the next coupled phase, an in-scope correction, an answer resolved from evidence, or explicit authorization.
@@ -237,7 +237,8 @@ Recommended role aliases:
 | `reviewer` | `@advisor` |
 | `security-reviewer` | `@advisor` |
 | `librarian` | `@smol` |
-| `task` | `@task` or a stronger implementation role |
+| `poteto-agent` | `@task` or a stronger implementation role |
+| `task` | `@task` (fallback only) |
 | `sonic` | `@tiny` or `@smol` |
 
 These are recommendations, not task payload fields.

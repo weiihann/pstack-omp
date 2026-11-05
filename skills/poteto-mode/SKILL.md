@@ -109,7 +109,7 @@ Use these canonical roles:
 | `owner` | Coupled multi-step implementation that benefits from retained session context. |
 | `watcher` | One exact generation or external-state transition, then terminate. |
 
-You own every delegated session's work. Review the diff and write your own summary, don't pass through what it said.
+You own every delegated session's work. Review the diff and write your own summary, don't pass through what it said. Code-writing delegates (implementers, owners, ad-hoc helpers) run as `poteto-agent`, which reads this file in full before any work. A generic worker skips that read and drifts.
 
 Use only these canonical lifecycle protocols: **Bounded session**, **Panel**, **Long-lived owner**, and **One-shot watcher**. Their mechanics live in the active adapter. Start every Panel participant before waiting for any result. Keep implementers, reviewers, judges, and synthesizers separate. A child never starts another child; it returns proposed briefs to the root.
 
