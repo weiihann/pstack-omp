@@ -11,8 +11,9 @@ While this skill is active, its role map is the specific pstack execution contra
 
 ## Canonical role map
 
-Use the live host's configured names. This mapping targets OMP's bundled task
-agents.
+Use the live host's configured names. OMP bundles `scout`, `reviewer`,
+`security-reviewer`, `task`, and `sonic`. This package ships `designer` and
+`librarian` in its `agents/` directory.
 
 | Canonical role | OMP agent | Contract |
 |---|---|---|
@@ -39,7 +40,7 @@ task
 sonic
 ```
 
-A canonically routed task item's `agent` value must be one of those bundled names. Canonical role labels and model aliases are not agent names.
+A canonically routed task item's `agent` value must be one of those names. Canonical role labels and model aliases are not agent names.
 
 `poteto-agent` and `comment-sicko` are custom compatibility agents for direct named seams in imported skills. A direct compatibility call may use that custom agent name; ordinary canonical routing never does.
 
@@ -108,12 +109,12 @@ Background task results arrive through the host's async result delivery. Record 
 
 - Read the full result from `agent://<id>`.
 - Read the session transcript from `history://<id>` when the report is incomplete, ambiguous, or suspicious.
-- Use `hub` with `op: "jobs"` to inspect jobs and `op: "wait"` with `ids` to wait for specific job IDs.
-- Use `hub` with `op: "list"` to inspect peers and `op: "send"` with `to` for one in-scope correction, answer, authorization, or next coupled phase.
-- Use `hub` with `op: "cancel"` and exact job `ids` for stale, superseded, or scope-breaching work.
+- Use the `wait` tool to block on background jobs only when nothing else is actionable. `read proc://` lists jobs and agents; `read proc://<id>` inspects one without consuming its delivery.
+- Use `write agent://<id>` for one in-scope correction, answer, authorization, or next coupled phase. `read history://` lists registered agents.
+- Use `write proc://<id>/kill` with no content to cancel stale, superseded, or scope-breaching work.
 - A follow-up to a parked session revives the same session when the host reports that capability.
 - Never steer a reviewer toward a preferred conclusion.
-- Use only operations exposed by the live `hub` schema. Do not invent lifecycle operations.
+- Use only operations the live tools expose. Do not invent lifecycle operations.
 - Ignore duplicate terminal deliveries and reject stale artifact generations.
 
 A task result is evidence, not completion. The root inspects the artifact and runs verification.
@@ -172,7 +173,7 @@ A role or unit change requires a fresh task.
 1. Partition independent slices or race arms with one task per participant.
 2. Start every participant in one batch before consuming any result.
 3. Track participants by semantic name and identifiers, never arrival order.
-4. Wait for every required result through `hub` `op: "wait"`, or cancel it explicitly through `hub` `op: "cancel"`.
+4. Wait for every required result through the `wait` tool, or cancel it explicitly with `write proc://<id>/kill`.
 5. Ignore duplicate terminal delivery.
 6. Freeze implementation artifacts, branches, head SHAs, reports, and hashes.
 7. Start every independent reviewer in a new batch only after the candidates are frozen.
@@ -186,7 +187,7 @@ Do not mix implementers, reviewers, or synthesizers in one session. Do not let r
 1. Start one non-isolated `task` session with the complete owner brief.
 2. Record its agent ID and reuse it. Do not start a sibling owner for the same unit.
 3. The owner works only in its assigned branch and paths and never starts children.
-4. Send a `hub` `op: "send"` follow-up only for the next coupled phase, an in-scope correction, an answer resolved from evidence, or explicit authorization.
+4. Send a `write agent://<id>` follow-up only for the next coupled phase, an in-scope correction, an answer resolved from evidence, or explicit authorization.
 5. Require a terminal report at each verification boundary.
 6. Independently verify the boundary before authorizing the next phase.
 7. Stand down on ownership violation, stale generation, or terminal scope breach.
@@ -206,7 +207,7 @@ A watcher observes. It does not fix, merge, authorize, or silently follow a chan
 
 Children resolve uncertainty from source, standing policy, frozen evidence, or the brief. Otherwise they use the safest reversible interpretation and report the assumption, or return `BLOCKED` with the exact missing decision and evidence gathered.
 
-The root resolves a child question and sends the answer through `hub` `op: "send"` to the existing agent. Ask the user only for genuine product preference, unavailable authority, or an irreversible action not covered by standing orders.
+The root resolves a child question and sends the answer through `write agent://<id>` to the existing agent. Ask the user only for genuine product preference, unavailable authority, or an irreversible action not covered by standing orders.
 
 ## Ownership and verification
 

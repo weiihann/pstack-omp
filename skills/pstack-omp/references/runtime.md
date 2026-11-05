@@ -27,9 +27,9 @@ child, review, transcript, or live check happened unless OMP reported it.
 | `owner` | One coupled implementation session retained through its lifecycle. |
 | `mechanical` | Fully specified low-judgment edits. |
 
-Map these roles to OMP's bundled task agents: `scout`, `designer`, `reviewer`,
-`security-reviewer`, `librarian`, `task`, and `sonic`. The live `task` inventory
-wins over this document.
+Map these roles to OMP task agents: the bundled `scout`, `reviewer`,
+`security-reviewer`, `task`, and `sonic`, plus `designer` and `librarian` from
+this package's `agents/`. The live `task` inventory wins over this document.
 
 Every child brief must stand alone. It must name its goal, role, writable scope,
 acceptance criteria, verification command, forbidden scope, and report format. A
